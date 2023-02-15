@@ -7,18 +7,18 @@ function notFoundHandaller(req, res, next) {
 }
 
 //default error handalling page
-function errorHandaller(err, req, res, next) {
-  res.locals.err =
-    process.env.NODE_ENV === "development" ? err : { message: err.message };
+function errorHandaller(error, req, res, next) {
+  res.locals.error =
+    process.env.NODE_ENV === "development" ? error : { message: error.message };
 
-  res.status(err.status || 500);
+  res.status(error.status || 500);
 
   if (res.locals.html) {
     res.render("error", {
       title: "Error page ",
     });
   } else {
-    res.json(res.locals.err);
+    res.json(res.locals.error);
   }
 }
 
