@@ -7,14 +7,42 @@
     <meta name="author" content="Sumit Saha" />
     <meta name="owner" content="learnwithsumit.com" />
     <title><%= title %></title>
-    <link rel="shortcut icon" href="./images/favicon.png" />
+    <link
+      rel="shortcut icon"
+      href="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+    />
     <link rel="stylesheet" href="./stylesheets/toastify.css" />
     <link rel="stylesheet" href="./stylesheets/style.css" />
     <script src="./js/toastify.js"></script>
   </head>
   <body>
     <div class="menu">
+      <% if(loggedInUser && loggedInUser.username) {%>
       <div class="menu-item"><a href="/inbox">Inbox</a></div>
       <div class="menu-item"><a href="/users">Users</a></div>
-      <div class="menu-item"><a href="/">Login</a></div>
+      <div class="menu-item"><a href="#" onclick="logout()">LogOut</a></div>
+      <% } else {%>
+      <div class="menu-item"><a href="/inbox">Inbox</a></div>
+      <div class="menu-item"><a href="/users">Users</a></div>
+      <div class="menu-item"><a href="/">LogIn</a></div>
+      <% }%>
     </div>
+
+    <script>
+      const logoutToast = Toastify({
+        text: "LogOut Successfull",
+        duration: 1000,
+      });
+
+      const logout = function () {
+        fetch("/", {
+          method: "DELETE",
+        });
+        logoutToast.showToast();
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1000);
+      };
+    </script>
+  </body>
+</html>
